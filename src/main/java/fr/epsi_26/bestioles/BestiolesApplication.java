@@ -90,5 +90,35 @@ public class BestiolesApplication implements CommandLineRunner {
         System.out.println("\nRecherche nom latin, ex : lupus :");
         List<Species> lupusSpecies = speciesRepository.findByLatinNameContainingIgnoreCase("Lupus");
         lupusSpecies.forEach(System.out::println);
+
+
+        System.out.println("\nTP4 - TESTS PERSON");
+
+        // Recherche "Lamarque" "Jean"
+        System.out.println("Recherche 'Lamarque' 'Jean' :");
+        List<Person> lamarqueOuJean = personRepository.findByLastnameOrFirstname("Lamarque", "Jean");
+        lamarqueOuJean.forEach(System.out::println);
+
+        // Recherche personnes >= 50
+        System.out.println("\nRecherche des vieux :");
+        List<Person> seniors = personRepository.findByAgeGreaterThanEqual(50);
+        seniors.forEach(System.out::println);
+
+
+        System.out.println("\nTP4 - TESTS ANIMAL");
+
+        /*// appele de especeChat
+        Species especeChat = speciesRepository.findFirstByCommonName("Chat");*/
+
+        // chats
+        System.out.println("chats :");
+        List<Animal> tousLesChats = animalRepository.findBySpecies(especeChat);
+        tousLesChats.forEach(System.out::println);
+
+        // couleur : Blanc ou Noir
+        System.out.println("\nAnimaux Blancs ou Noirs :");
+        List<String> couleursRecherchees = java.util.List.of("Blanc", "Noir");
+        List<Animal> animauxBlancsOuNoirs = animalRepository.findByColorIn(couleursRecherchees);
+        animauxBlancsOuNoirs.forEach(System.out::println);
     }
 }
