@@ -120,5 +120,47 @@ public class BestiolesApplication implements CommandLineRunner {
         List<String> couleursRecherchees = java.util.List.of("Blanc", "Noir");
         List<Animal> animauxBlancsOuNoirs = animalRepository.findByColorIn(couleursRecherchees);
         animauxBlancsOuNoirs.forEach(System.out::println);
+
+
+        System.out.println("\nTP5 - @QUERY species");
+        //nom commun ascendant
+        System.out.println("species par ordre alphabétique :");
+        List<Species> especesTriees = speciesRepository.findAllOrderedByCommonNameAsc();
+        especesTriees.forEach(System.out::println);
+
+        // LIKE
+        // N'oublie pas les '%' pour indiquer "n'importe quoi avant et n'importe quoi après"
+        System.out.println("\nspecies avec 'ha' :"); // exemple avec "ha"
+        List<Species> especesLike = speciesRepository.findByCommonNameLike("%ha%"); // %pour avnt apres
+        especesLike.forEach(System.out::println);
+
+
+        System.out.println("\n@QUERY PERSON");
+        // 20 et 40 ans
+        System.out.println("Personnes entre 20 - 40 :");
+        List<Person> personnesAgees = personRepository.findByAgeBetweenCustom(20, 40);
+        personnesAgees.forEach(System.out::println);
+
+        // Propriétaires d'un animal ID
+        System.out.println("\n proprio de ID1 :");
+        Animal max = animalRepository.findById(1).orElse(null);
+
+        if (max != null) {
+            List<Person> proprietairesDeMax = personRepository.findPersonsByAnimal(max);
+            proprietairesDeMax.forEach(System.out::println);
+        }
+
+
+        System.out.println("\nTP5 @QUERY ANIMAL");
+        // nombre de femelle
+        Long nombreFemelles = animalRepository.countBySexCustom("F");
+        System.out.println("Nombre femelles : " + nombreFemelles);
+
+        // ID 1 proprio ?? id1 = max
+        Animal maxAnimal = animalRepository.findById(1).orElse(null);
+        if (maxAnimal != null) {
+            Boolean maxAUnMaitre = animalRepository.belongsToAtLeastOnePerson(maxAnimal);
+            System.out.println(maxAnimal.getName() + " a un propio ? " + (maxAUnMaitre ? "OUI" : "NON"));
+        }
     }
 }
