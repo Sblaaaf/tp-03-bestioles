@@ -22,16 +22,25 @@ public class Person {
     private String lastname;
     private String login;
     private String mdp;
-    private Boolean active; // Le tinyint(4) de la BDD est transformé en Boolean par Spring
+    private Boolean active;
 
-    // --- LA RELATION MANY-TO-MANY ---
-    @ManyToMany(fetch = FetchType.EAGER) // EAGER permet de charger les animaux en même temps que la personne
+    // MANY-TO-MANY PERSON
+    @ManyToMany(fetch = FetchType.EAGER) // EAGER permet de charger les animaux et personne
     @JoinTable(
-            name = "person_animals", // Le nom exact de la table de jointure dans ta base SQL
-            joinColumns = @JoinColumn(name = "person_id"), // La colonne qui pointe vers Person
-            inverseJoinColumns = @JoinColumn(name = "animals_id") // La colonne qui pointe vers Animal
+            name = "person_animals",
+            joinColumns = @JoinColumn(name = "person_id"), // pointe vers Person
+            inverseJoinColumns = @JoinColumn(name = "animals_id") // pointe vers Animal
     )
     private List<Animal> animals;
+
+    // MANY-TO-MANY ROLES
+    @ManyToMany
+    @JoinTable(
+            name = "person_role",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private java.util.List<Role> roles;
 
     // On ne met pas la liste "animals" dans le toString pour éviter une boucle infinie d'affichage
     @Override

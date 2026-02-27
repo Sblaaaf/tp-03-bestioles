@@ -18,7 +18,9 @@ public class BestiolesApplication implements CommandLineRunner {
 
     @Autowired
     private AnimalRepository animalRepository;
+    @Autowired
     private SpeciesRepository speciesRepository;
+    @Autowired
     private PersonRepository personRepository;
 
     public static void main(String[] args) {
