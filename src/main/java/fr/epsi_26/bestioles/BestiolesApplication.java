@@ -11,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootApplication
@@ -76,5 +77,18 @@ public class BestiolesApplication implements CommandLineRunner {
         personRepository.findAll().forEach(person -> {
             System.out.println(person.getFirstname() + " possède " + person.getAnimals().size() + " animal/animaux !");
         });
+
+
+        System.out.println("\nTP4  - TESTS SPECIES");
+
+        // findFirstByCommonName
+        System.out.println("Recherche du premier 'Chat' :");
+        Species chat = speciesRepository.findFirstByCommonName("Chat");
+        System.out.println(chat);
+
+        // findByLatinNameContainingIgnoreCase
+        System.out.println("\nRecherche nom latin, ex : lupus :");
+        List<Species> lupusSpecies = speciesRepository.findByLatinNameContainingIgnoreCase("Lupus");
+        lupusSpecies.forEach(System.out::println);
     }
 }
