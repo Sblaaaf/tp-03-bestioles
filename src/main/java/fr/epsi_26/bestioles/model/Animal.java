@@ -19,15 +19,15 @@ public class Animal {
     private String name;
     private String sex;
 
-    @Column(name = "species_id")
-    private Integer speciesId;
+    @ManyToOne
+    @JoinColumn(name = "species_id")
+    private Species species;
 
-    // Constructeur avec paramètres
-    public Animal(String name, String color, String sex, Integer speciesId) {
+    public Animal(String name, String color, String sex, Species species) {
         this.name = name;
         this.color = color;
         this.sex = sex;
-        this.speciesId = speciesId;
+        this.species = species;
     }
 
     @Override

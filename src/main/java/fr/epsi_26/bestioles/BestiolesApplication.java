@@ -1,7 +1,11 @@
 package fr.epsi_26.bestioles;
 
 import fr.epsi_26.bestioles.model.Animal;
+import fr.epsi_26.bestioles.model.Species;
+import fr.epsi_26.bestioles.model.Person;
 import fr.epsi_26.bestioles.repository.AnimalRepository;
+import fr.epsi_26.bestioles.repository.PersonRepository;
+import fr.epsi_26.bestioles.repository.SpeciesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,6 +18,8 @@ public class BestiolesApplication implements CommandLineRunner {
 
     @Autowired
     private AnimalRepository animalRepository;
+    private SpeciesRepository speciesRepository;
+    private PersonRepository personRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(BestiolesApplication.class, args);
@@ -41,8 +47,10 @@ public class BestiolesApplication implements CommandLineRunner {
 
         // Création  save
         System.out.println("\nNouvelles bestioles...");
-        Animal a1 = new Animal("Tigrou", "Roux", "M", 1);
-        Animal a2 = new Animal("Snoopy", "Blanc", "M", 2);
+        Species especeChat = speciesRepository.findById(1).orElse(null);
+        Species especeChien = speciesRepository.findById(2).orElse(null);
+        Animal a1 = new Animal("Tigrou", "Roux", "M", especeChat);
+        Animal a2 = new Animal("Snoopy", "Blanc", "M", especeChien);
         animalRepository.save(a1);
         animalRepository.save(a2);
         System.out.println("Nouvelles bestioles sauvegardées !");
@@ -52,7 +60,7 @@ public class BestiolesApplication implements CommandLineRunner {
         Optional<Animal> animalTrouve = animalRepository.findById(a1.getId());
         animalTrouve.ifPresent(animal -> System.out.println("Trouvé : " + animal));
 
-        // Supprimer  delete, et afficher la longueur de la liste
+        // Supprimer  delete
         System.out.println("\nSuppression ID " + a1.getId());
         animalRepository.delete(animalTrouve.get());
 
@@ -61,5 +69,10 @@ public class BestiolesApplication implements CommandLineRunner {
         System.out.println("Suppression OK. Nombre d'animaux en DB : " + nombreRestants);
 
         System.out.println("======= FINITO PIPO =======");
+
+        System.out.println("\nPERSONNES");
+        personRepository.findAll().forEach(person -> {
+            System.out.println(person.getFirstname() + " possède " + person.getAnimals().size() + " animal/animaux !");
+        });
     }
 }
