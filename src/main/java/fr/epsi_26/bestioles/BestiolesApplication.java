@@ -41,8 +41,8 @@ public class BestiolesApplication implements CommandLineRunner {
 
         // Création  save
         System.out.println("\nNouvelles bestioles...");
-        Animal a1 = new Animal("Chat");
-        Animal a2 = new Animal("Chien");
+        Animal a1 = new Animal("Tigrou", "Roux", "M", 1);
+        Animal a2 = new Animal("Snoopy", "Blanc", "M", 2);
         animalRepository.save(a1);
         animalRepository.save(a2);
         System.out.println("Nouvelles bestioles sauvegardées !");

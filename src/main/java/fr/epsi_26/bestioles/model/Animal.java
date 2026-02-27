@@ -15,15 +15,23 @@ public class Animal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String nom;
+    private String color;
+    private String name;
+    private String sex;
+
+    @Column(name = "species_id")
+    private Integer speciesId;
 
     // Constructeur avec paramètres
-    public Animal(String nom) {
-        this.nom = nom;
+    public Animal(String name, String color, String sex, Integer speciesId) {
+        this.name = name;
+        this.color = color;
+        this.sex = sex;
+        this.speciesId = speciesId;
     }
 
     @Override
     public String toString() {
-        return "Animal{id=" + id + ", nom='" + nom + "'}";
+        return "Animal{id=" + id + ", name='" + name + "', color='" + color + "', sex='" + sex + "'}";
     }
 }
