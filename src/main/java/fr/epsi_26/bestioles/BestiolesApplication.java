@@ -6,6 +6,7 @@ import fr.epsi_26.bestioles.model.Person;
 import fr.epsi_26.bestioles.repository.AnimalRepository;
 import fr.epsi_26.bestioles.repository.PersonRepository;
 import fr.epsi_26.bestioles.repository.SpeciesRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -40,6 +41,7 @@ public class BestiolesApplication implements CommandLineRunner {
         }*/
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         System.out.println("======= GO GO GO !! =======");
 
@@ -162,5 +164,17 @@ public class BestiolesApplication implements CommandLineRunner {
             Boolean maxAUnMaitre = animalRepository.belongsToAtLeastOnePerson(maxAnimal);
             System.out.println(maxAnimal.getName() + " a un propio ? " + (maxAUnMaitre ? "OUI" : "NON"));
         }
+
+        System.out.println("\nTP6 TESTS REPOSITORY CUSTOM");
+
+        // Générer des personnes aléatoires
+        System.out.println("Génération de 5 personnes aléatoires...");
+        personRepository.generateRandomPersons(5);
+        System.out.println("Génération terminée. Nb en BDD: " + personRepository.count());
+
+        // Supprimer les personnes sans animaux
+        System.out.println("\nSuppression des personnes sans animaux...");
+        personRepository.deletePersonsWithoutAnimals();
+        System.out.println("Suppression terminée. Nb restant en BDD : " + personRepository.count());
     }
 }
