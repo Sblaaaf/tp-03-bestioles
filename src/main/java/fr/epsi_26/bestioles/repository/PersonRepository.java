@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PersonRepository extends JpaRepository<Person, Integer> {
+public interface PersonRepository extends JpaRepository<Person, Integer>, PersonRepositoryCustom {
 
     // Recherche nom / prénom
     List<Person> findByLastnameOrFirstname(String lastname, String firstname);
